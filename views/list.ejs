@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ch20 - sqlite3-bread</title>
+    <script src="https://kit.fontawesome.com/028160cc98.js" crossorigin="anonymous"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: blue;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        .p1 {
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .p2 {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .p3 {
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=number],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=date],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 5%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        input[type=button] {
+            width: 5%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="p2">BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <h1 class="p2">Filters </h1>
+    <form action="" method="post">
+        <table width="50%">
+            <tr>
+            </tr>
+            <td><Input type="checkbox"></Input> ID</td>
+            <td><input type="number" name="id" placeholder="ID" style="width: 100%"></td>
+            <tr>
+            </tr>
+            <td><Input type="checkbox"></Input> String</td>
+            <td><input type="text" name="string" placeholder="String" style="width: 100%"></td>
+            <tr>
+            </tr>
+            <td><input type="checkbox"> Integer</td>
+            <td><input type="number" name="integer" placeholder="Integer" style="width: 100%"></td>
+            <tr>
+            </tr>
+            <td><input type="checkbox"> Float</td>
+            <td><input type="number" step="any" name="float" placeholder="Float" style="width: 100%"></td>
+            <tr>
+            </tr>
+            <td><input type="checkbox"> Date</td>
+            <td><input type="date" name="date" placeholder="End Date" style="width: 100%"></td>
+            <tr>
+            </tr>
+            <td> <input type="checkbox"> Boolean</td>
+            <td>
+                <select name="boolean" id="boolean" style="width: 100%">
+                    <option value="">Choose the boolean...</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </td>
+            <tr>
+            </tr>
+    </form>
+    </table>
+    <td><input type="button" onclick="location.href='/';" value="Search" style="background-color: blue"></td>
+    <table style="width: 100%" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>String</th>
+                <th>Integer</th>
+                <th>Float</th>
+                <th>Date</th>
+                <th>Boolean</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach((item, index)=> { %>
+                <tr>
+                    <td>
+                        <%= index + 1%>
+                    </td>
+                    <td>
+                        <%= item.string %>
+                    </td>
+                    <td>
+                        <%= item.integer %>
+                    </td>
+                    <td>
+                        <%= item.float %>
+                    </td>
+                    <td>
+                        <%= item.date %>
+                    </td>
+                    <td>
+                        <%= item.boolean %>
+                    </td>
+
+                    <td>
+                        <button type="button" onclick="location.href='edit/<%= index %>';"><i
+                                class="fas fa-edit" style="font-size: 20px"></i></button>
+                        <button type="button" onclick="location.href='/delete/<%= index %>';"><i
+                                class="fa-solid fa-trash-can" style="font-size: 20px"></i></button>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <br>
+    <div class="pagination">
+        <a href="#">Previous</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next</a>
+    </div>
+    <br>
+    <input type="button" onclick="location.href='/add';" value=" Add" class="button" style="background-color: blue" />
+</body>
+
+</html>
