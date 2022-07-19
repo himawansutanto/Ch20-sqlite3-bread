@@ -32,7 +32,7 @@ app.post('/add', (req, res) => {
 })
 
 app.get('/edit/:id', (req, res) => {
-    db.all(`SELECT * FROM bread WHERE id = ?`, [parseInt(req.params.id) + 1], (err, data) => {
+    db.all(`SELECT * FROM bread WHERE id = ?`, [parseInt(req.params.id)], (err, data) => {
         res.render('edit', { item: data[0] })
     })
 })
@@ -46,8 +46,7 @@ app.post('/edit/:id', (req, res) => {
 
 app.get('/delete/:id', (req, res) => {
     const index = req.params.id
-    console.log(req.params.id)
-    db.run('DELETE FROM bread WHERE id = ?'[req.params.id], (err) => {
+    db.run('DELETE FROM bread WHERE id = ?', [parseInt(req.params.id)], (err,) => {
         res.redirect('/')
     })
 })
