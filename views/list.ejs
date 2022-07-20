@@ -122,103 +122,114 @@
         input[type=submit]:hover {
             background-color: #45a049;
         }
+
+        div {
+            border: auto;
+            padding: auto;
+            width: auto;
+            resize: vertical;
+            overflow: auto;
+        }
     </style>
 </head>
 
 <body>
-    <h1 class="p2">BREAD (Browse, Read, Edit, Add, Delete)</h1>
-    <h1 class="p2">Filters </h1>
-    <form action="" method="post">
-        <table width="50%">
-            <tr>
-            </tr>
-            <td><Input type="checkbox"></Input> ID</td>
-            <td><input type="number" name="id" placeholder="ID" style="width: 100%"></td>
-            <tr>
-            </tr>
-            <td><Input type="checkbox"></Input> String</td>
-            <td><input type="text" name="string" placeholder="String" style="width: 100%"></td>
-            <tr>
-            </tr>
-            <td><input type="checkbox"> Integer</td>
-            <td><input type="number" name="integer" placeholder="Integer" style="width: 100%"></td>
-            <tr>
-            </tr>
-            <td><input type="checkbox"> Float</td>
-            <td><input type="number" step="any" name="float" placeholder="Float" style="width: 100%"></td>
-            <tr>
-            </tr>
-            <td><input type="checkbox"> Date</td>
-            <td><input type="date" name="date" placeholder="End Date" style="width: 100%"></td>
-            <tr>
-            </tr>
-            <td> <input type="checkbox"> Boolean</td>
-            <td>
-                <select name="boolean" id="boolean" style="width: 100%">
-                    <option value="">Choose the boolean...</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-            </td>
-            <tr>
-            </tr>
-    </form>
-    </table>
-    <td><input type="button" onclick="location.href='/';" value="Search" style="background-color: blue"></td>
-    <table style="width: 100%" border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>String</th>
-                <th>Integer</th>
-                <th>Float</th>
-                <th>Date</th>
-                <th>Boolean</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% rows.forEach((item)=> { %>
+    <div>
+        <h1 class="p2">BREAD (Browse, Read, Edit, Add, Delete)</h1>
+        <h1 class="p2">Filters </h1>
+        <form action="" method="post">
+            <table width="50%">
                 <tr>
-                    <td>
-                        <%= item.id %>
-                    </td>
-                    <td>
-                        <%= item.string %>
-                    </td>
-                    <td>
-                        <%= item.integer %>
-                    </td>
-                    <td>
-                        <%= item.float %>
-                    </td>
-                    <td>
-                        <%= item.date %>
-                    </td>
-                    <td>
-                        <%= item.boolean %>
-                    </td>
-
-                    <td>
-                        <button type="button" onclick="location.href='edit/<%= item.id %>';"><i class="fas fa-edit"
-                                style="font-size: 20px"></i></button>
-                        <button type="button" onclick="location.href='delete/<%= item.id %>';"><i
-                                class="fa-solid fa-trash-can" style="font-size: 20px"></i></button>
-                    </td>
                 </tr>
-                <% }) %>
-        </tbody>
-    </table>
-    <br>
-    <div class="pagination">
-        <a href="#">Previous</a>
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">Next</a>
+                <td><Input type="checkbox"></Input> ID</td>
+                <td><input type="number" name="id" placeholder="ID" style="width: 100%"></td>
+                <tr>
+                </tr>
+                <td><Input type="checkbox"></Input> String</td>
+                <td><input type="text" name="string" placeholder="String" style="width: 100%"></td>
+                <tr>
+                </tr>
+                <td><input type="checkbox"> Integer</td>
+                <td><input type="number" name="integer" placeholder="Integer" style="width: 100%"></td>
+                <tr>
+                </tr>
+                <td><input type="checkbox"> Float</td>
+                <td><input type="number" step="any" name="float" placeholder="Float" style="width: 100%"></td>
+                <tr>
+                </tr>
+                <td><input type="checkbox"> Date</td>
+                <td><input type="date" name="date" placeholder="End Date" style="width: 100%"></td>
+                <tr>
+                </tr>
+                <td> <input type="checkbox"> Boolean</td>
+                <td>
+                    <select name="boolean" id="boolean" style="width: 100%">
+                        <option value="">Choose the boolean...</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </td>
+                <tr>
+                </tr>
+        </form>
+        </table>
+        <td><input type="button" onclick="location.href='/';" value="Search" style="background-color: blue"></td>
+        <table style="width: 100%" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>String</th>
+                    <th>Integer</th>
+                    <th>Float</th>
+                    <th>Date</th>
+                    <th>Boolean</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% rows.forEach((item)=> { %>
+                    <tr>
+                        <td>
+                            <%= item.id %>
+                        </td>
+                        <td>
+                            <%= item.string %>
+                        </td>
+                        <td>
+                            <%= item.integer %>
+                        </td>
+                        <td>
+                            <%= item.float %>
+                        </td>
+                        <td>
+                            <%= item.date %>
+                        </td>
+                        <td>
+                            <%= item.boolean %>
+                        </td>
+
+                        <td>
+                            <button type="button" onclick="location.href='edit/<%= item.id %>';"><i class="fas fa-edit"
+                                    style="font-size: 20px"></i></button>
+                            <button type="button" onclick="location.href='delete/<%= item.id %>';"><i
+                                    class="fa-solid fa-trash-can" style="font-size: 20px"></i></button>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <br>
+        <div class="pagination">
+            <a href="#">Previous</a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">Next</a>
+        </div>
+        <br>
+        <input type="button" onclick="location.href='/add';" value=" Add" class="button"
+            style="background-color: blue" />
     </div>
-    <br>
-    <input type="button" onclick="location.href='/add';" value=" Add" class="button" style="background-color: blue" />
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser');
+const { Console } = require('console');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
 const port = 3000
@@ -26,7 +27,7 @@ app.get('/add', (req, res) => {
 })
 
 app.post('/add', (req, res) => {
-    db.run('INSERT INTO bread (string, integer, float, date, boolean) VALUES (?, ?, ?, ?, ?)', [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean], (err) => {
+    db.run(`INSERT INTO bread (string, integer, float, date, boolean) VALUES (?, ?, ?, ?, ?)`, [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean], (err) => {
         res.redirect('/')
     })
 })
@@ -38,7 +39,7 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.post('/edit/:id', (req, res) => {
-    db.run('UPDATE bread SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?', [req.params.string, req.params.integer, req.params.float, req.params.date, req.params.boolean, req.params.id], (err, data) => {
+    db.run(`UPDATE bread SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?`, [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, req.params.id], (err, data) => {
         if (err) console.log(err)
         res.redirect('/')
     })
@@ -46,19 +47,19 @@ app.post('/edit/:id', (req, res) => {
 
 app.get('/delete/:id', (req, res) => {
     const index = req.params.id
-    db.run('DELETE FROM bread WHERE id = ?', [parseInt(req.params.id)], (err,) => {
+    db.run(`DELETE FROM bread WHERE id = ?`, [parseInt(req.params.id)], (err,) => {
         res.redirect('/')
     })
 })
 
 app.get('/', (req, res) => {
     const page = req.query.page || 1
-    const limit = 2
+    const limit = 3
     const offset = (page - 1) * limit
 
-    db.all('SELECT COUNT(*) AS TOTAL FROM bread', (err, data) => {
+    db.all(`SELECT COUNT(*) AS TOTAL FROM bread`, (err, data) => {
         const pages = Math.ceil(data[0].total / limit)
-        db.all('SELECT * FROM bread LIMIT ? OFFSET ?', [limit, offset], (err, data) => {
+        db.all(`SELECT * FROM bread LIMIT ? OFFSET ?`, [limit, offset], (err, data) => {
             res.render('list', { rows: data, pages, page })
         })
     })

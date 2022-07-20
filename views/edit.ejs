@@ -135,8 +135,8 @@
             <td>Boolean
             <td>
                 <select name="boolean" id="boolean" style="width: 200%" value="<%= item.boolean %>">
-                    <option value="true">True</option>
-                    <option value="false">False</option>
+                    <option value="true" <%= item.boolean == 'true' ? 'selected' : '' %> >True</option>
+                    <option value="false" <%= item.boolean == 'false' ? 'selected' : '' %> >False</option>
                 </select>
             </td>
             </td>
