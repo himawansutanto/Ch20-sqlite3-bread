@@ -51,6 +51,19 @@ app.get('/delete/:id', (req, res) => {
     })
 })
 
+app.get('/', (req, res) => {
+    const page = req.query.page || 1
+    const limit = 2
+    const offset = (page - 1) * limit
+
+    db.all('SELECT COUNT(*) AS TOTAL FROM bread', (err, data) => {
+        const pages = Math.ceil(data[0].total / limit)
+        db.all('SELECT * FROM bread LIMIT ? OFFSET ?', [limit, offset], (err, data) => {
+            res.render('list', { rows: data, pages, page })
+        })
+    })
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
