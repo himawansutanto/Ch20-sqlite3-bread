@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser');
-const { Console } = require('console');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
 const port = 3000
