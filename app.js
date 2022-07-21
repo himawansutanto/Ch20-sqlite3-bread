@@ -16,11 +16,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
-    db.all('SELECT * FROM bread', (err, data) => {
-        res.render('list', { rows: data })
-    })
-})
+// app.get('/', (req, res) => {
+//     db.all('SELECT * FROM bread', (err, data) => {
+//         res.render('list', { rows: data })
+//     })
+// })
 
 app.get('/add', (req, res) => {
     res.render('add')
@@ -57,9 +57,9 @@ app.get('/', (req, res) => {
     const limit = 3
     const offset = (page - 1) * limit
 
-    db.all(`SELECT COUNT(*) AS TOTAL FROM bread`, (err, data) => {
-        const pages = Math.ceil(data[0].total / limit)
-        db.all(`SELECT * FROM bread LIMIT ? OFFSET ?`, [limit, offset], (err, data) => {
+    db.all('SELECT COUNT(*) AS TOTAL FROM bread', (err, count) => {
+        const pages = Math.ceil(parseInt(count[0].TOTAL) / limit)
+        db.all('SELECT * FROM bread LIMIT ? OFFSET ?', [limit, offset], (err, data) => {
             res.render('list', { rows: data, pages, page })
         })
     })
