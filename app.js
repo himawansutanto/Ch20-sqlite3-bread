@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
+const moment = require('moment');
 const port = 3000
 
 const db = new sqlite3.Database('bread.db', sqlite3.OPEN_READWRITE, err => {
@@ -59,7 +60,7 @@ app.get('/', (req, res) => {
     db.all('SELECT COUNT(*) AS TOTAL FROM bread', (err, count) => {
         const pages = Math.ceil(parseInt(count[0].TOTAL) / limit)
         db.all('SELECT * FROM bread LIMIT ? OFFSET ?', [limit, offset], (err, data) => {
-            res.render('list', { rows: data, pages, page })
+            res.render('list', { rows: data, pages, page, moment })
         })
     })
 })
