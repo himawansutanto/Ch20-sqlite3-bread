@@ -3,7 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
-const moment = require('moment');
+var moment = require('moment');
 const port = 3000
 
 const db = new sqlite3.Database('bread.db', sqlite3.OPEN_READWRITE, err => {
@@ -54,12 +54,59 @@ app.get('/delete/:id', (req, res) => {
 
 app.get('/', (req, res) => {
     const page = req.query.page || 1
-    const limit = 3
+    const limit = 2
     const offset = (page - 1) * limit
+    const wheres = []
+    const values = []
 
-    db.all('SELECT COUNT(*) AS TOTAL FROM bread', (err, count) => {
+    //pencarian
+    if (req.query.id) {
+        wheres.push(`id = ?`)
+        values.push(req.query.id)
+    }
+
+    if (req.query.string) {
+        wheres.push(`string like '%' || ? || '%'`)
+        values.push(req.query.string)
+    }
+
+    if (req.query.integer) {
+        wheres.push(`integer = ?`)
+        values.push(req.query.integer)
+    }
+
+    if (req.query.float) {
+        wheres.push(`float = ? `)
+        values.push(req.query.float)
+    }
+
+    if (req.query.date) {
+        wheres.push(`date = ?`)
+        values.push(req.query.date)
+    }
+
+    if (req.query.boolean) {
+        wheres.push(`boolean =  ?`)
+        values.push(req.query.boolean)
+    }
+
+    let sql = 'SELECT COUNT(*) AS TOTAL FROM bread';
+    if (wheres.length > 0) {
+        sql += `WHERE ${wheres.join(' and ')}`
+    }
+    console.log('sql count', sql)
+
+    db.all(sql, values, (err, count) => {
         const pages = Math.ceil(parseInt(count[0].TOTAL) / limit)
-        db.all('SELECT * FROM bread LIMIT ? OFFSET ?', [limit, offset], (err, data) => {
+
+        sql = 'SELECT * FROM bread'
+        if (wheres.length > 0) {
+            sql += `WHERE ${wheres.join(' and ')}`
+        }
+        sql += ' LIMIT ? OFFSET ?'
+
+        console.log('sql get', sql, values)
+        db.all(sql, [...values, limit, offset], (err, data) => {
             res.render('list', { rows: data, pages, page, moment })
         })
     })
