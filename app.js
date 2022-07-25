@@ -16,12 +16,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// app.get('/', (req, res) => {
-//     db.all('SELECT * FROM bread', (err, data) => {
-//         res.render('list', { rows: data })
-//     })
-// })
-
 app.get('/add', (req, res) => {
     res.render('add')
 })
@@ -54,7 +48,7 @@ app.get('/delete/:id', (req, res) => {
 
 app.get('/', (req, res) => {
     const page = req.query.page || 1
-    const limit = 2
+    const limit = 4
     const offset = (page - 1) * limit
     const wheres = []
     const values = []
@@ -92,14 +86,14 @@ app.get('/', (req, res) => {
 
     let sql = 'SELECT COUNT(*) AS TOTAL FROM bread';
     if (wheres.length > 0) {
-        sql += `WHERE ${wheres.join(' and ')}`
+        sql += ` WHERE ${wheres.join(' and ')}`
     }
     console.log('sql count', sql)
 
     db.all(sql, values, (err, count) => {
         const pages = Math.ceil(parseInt(count[0].TOTAL) / limit)
 
-        sql = 'SELECT * FROM bread'
+        sql = 'SELECT * FROM bread '
         if (wheres.length > 0) {
             sql += `WHERE ${wheres.join(' and ')}`
         }
@@ -107,7 +101,7 @@ app.get('/', (req, res) => {
 
         console.log('sql get', sql, values)
         db.all(sql, [...values, limit, offset], (err, data) => {
-            res.render('list', { rows: data, pages, page, moment })
+            res.render('list', { rows: data, pages, page, moment, })
         })
     })
 })

@@ -150,6 +150,14 @@
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
         }
+
+        .btn-float-left {
+            float: left;
+        }
+
+        .btn-float-right {
+            float: right;
+        }
     </style>
 </head>
 
@@ -157,7 +165,7 @@
     <div>
         <h1 class="p2">BREAD (Browse, Read, Edit, Add, Delete)</h1>
         <h1 class="p2">Filters </h1>
-        <form action="" method="post">
+        <form action="" method="get">
             <table width="50%">
                 <tr>
                 </tr>
@@ -192,9 +200,15 @@
                 </td>
                 <tr>
                 </tr>
+
+
         </form>
         </table>
-        <td><input type="button" onclick="location.href='/';" value="Search" style="background-color: blue"></td>
+        <td><input type="submit" id="search" name="search" value="Search" style="background-color: blue"></td>
+        <td><input type="button" onclick="location.href='/';" value="Reset" class="btn-float-right" style="background-color: blue"></td>
+
+
+        <br>
         <table style="width: 100%" border="1">
             <thead>
                 <tr>
@@ -223,7 +237,7 @@
                             <%= item.float %>
                         </td>
                         <td>
-                            <%= moment(item.date).format('DD MMMM YYYY') %>
+                            <%= item.date %>
                         </td>
                         <td>
                             <%= item.boolean %>
