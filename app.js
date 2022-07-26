@@ -47,14 +47,14 @@ app.get('/delete/:id', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    const url = req.url == '/'? '/?page=1':req.url
+    const url = req.url == '/' ? '/?page=1' : req.url
     const page = req.query.page || 1
     const limit = 3
     const offset = (page - 1) * limit
     const wheres = []
     const values = []
 
-    //pencarian
+    //Search
     if (req.query.id) {
         wheres.push(`id = ?`)
         values.push(req.query.id)

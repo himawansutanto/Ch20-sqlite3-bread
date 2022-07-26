@@ -107,12 +107,14 @@
             <tr>
             </tr>
             <td>ID</td>
-            <td><input type="number" id="id" name="id" placeholder="ID" style="width: 200%" disabled value="<%= item.id %>">
+            <td><input type="number" id="id" name="id" placeholder="ID" style="width: 200%" disabled
+                    value="<%= item.id %>">
             </td>
             <tr>
             </tr>
             <td>String</td>
-            <td><input type="text" id="string" name="string" placeholder="String" style="width: 200%" value="<%= item.string %>">
+            <td><input type="text" id="string" name="string" placeholder="String" style="width: 200%"
+                    value="<%= item.string %>">
             </td>
             <tr>
             </tr>
@@ -128,15 +130,16 @@
             <tr>
             </tr>
             <td>Date</td>
-            <td><input type="date" id="date" name="date" placeholder="Date" style="width: 200%" value="<%= item.date %>">
+            <td><input type="date" id="date" name="date" placeholder="Date" style="width: 200%"
+                    value="<%= item.date %>">
             </td>
             <tr>
             </tr>
             <td>Boolean
             <td>
                 <select name="boolean" id="boolean" style="width: 200%" value="<%= item.boolean %>">
-                    <option value="true" <%= item.boolean == 'true' ? 'selected' : '' %> >True</option>
-                    <option value="false" <%= item.boolean == 'false' ? 'selected' : '' %> >False</option>
+                    <option value="true" <%=item.boolean=='true' ? 'selected' : '' %> >True</option>
+                    <option value="false" <%=item.boolean=='false' ? 'selected' : '' %> >False</option>
                 </select>
             </td>
             </td>
