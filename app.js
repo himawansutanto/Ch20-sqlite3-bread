@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
 var moment = require('moment');
+const { setFlagsFromString } = require('v8');
 const port = 3000
 
 const db = new sqlite3.Database('bread.db', sqlite3.OPEN_READWRITE, err => {
@@ -54,7 +55,6 @@ app.get('/', (req, res) => {
     const wheres = []
     const values = []
 
-    //Search
     if (req.query.id) {
         wheres.push(`id = ?`)
         values.push(req.query.id)
@@ -89,7 +89,6 @@ app.get('/', (req, res) => {
     if (wheres.length > 0) {
         sql += ` WHERE ${wheres.join(' and ')}`
     }
-    console.log('sql count', sql)
 
     db.all(sql, values, (err, count) => {
         const pages = Math.ceil(parseInt(count[0].TOTAL) / limit)
@@ -100,7 +99,6 @@ app.get('/', (req, res) => {
         }
         sql += ' LIMIT ? OFFSET ?'
 
-        console.log('sql get', sql, values)
         db.all(sql, [...values, limit, offset], (err, data) => {
             res.render('list', { rows: data, pages, page, moment, url })
         })
