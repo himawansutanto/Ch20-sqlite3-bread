@@ -47,8 +47,9 @@ app.get('/delete/:id', (req, res) => {
 })
 
 app.get('/', (req, res) => {
+    const url = req.url == '/'? '/?page=1':req.url
     const page = req.query.page || 1
-    const limit = 4
+    const limit = 3
     const offset = (page - 1) * limit
     const wheres = []
     const values = []
@@ -101,7 +102,7 @@ app.get('/', (req, res) => {
 
         console.log('sql get', sql, values)
         db.all(sql, [...values, limit, offset], (err, data) => {
-            res.render('list', { rows: data, pages, page, moment, })
+            res.render('list', { rows: data, pages, page, moment, url })
         })
     })
 })
