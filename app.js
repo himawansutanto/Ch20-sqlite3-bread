@@ -3,8 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const app = express()
 const sqlite3 = require('sqlite3').verbose();
-var moment = require('moment');
-const { setFlagsFromString } = require('v8');
+const moment = require('moment');
 const port = 3000
 
 const db = new sqlite3.Database('bread.db', sqlite3.OPEN_READWRITE, err => {
